@@ -1,11 +1,316 @@
 ---
-import Welcome from '../components/Welcome.astro';
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import concertImage from '../assets/images/concert.jpg';
+import terrasseImage from '../assets/images/terrasse.webp';
+import cidresImage from '../assets/images/cidres.jpeg';
 ---
 
 <Layout>
-	<Welcome />
+    <!-- Navigation Sticky -->
+    <nav class="nav-bar" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="#home" class="text-2xl font-bold" style="font-family: 'Playfair Display', serif; color: var(--primary-color);">JORAN</a>
+            <div class="flex gap-4">
+                <a href="#home" class="nav-link">Accueil</a>
+                <a href="/shop" class="nav-link">Boutique</a>
+                <a href="#about" class="nav-link">À propos</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="home">
+        <div class="hero-bg-layer"></div>
+        
+        <!-- Floating Bubbles -->
+        <div class="floating-bubbles" id="bubbles-container"></div>
+        
+        <!-- Floating Elements -->
+        <div class="floating-element apple-leaf" style="top: 15%; left: 10%; animation-delay: 0s;"></div>
+        <div class="floating-element apple-leaf" style="top: 60%; right: 15%; animation-delay: 2s;"></div>
+        <div class="floating-element apple-leaf" style="bottom: 20%; left: 20%; animation-delay: 4s;"></div>
+        
+        <div class="hero-content">
+            <h1 class="hero-logo">
+                <span class="letter">J</span><span class="letter">O</span><span class="letter">R</span><span class="letter">A</span><span class="letter">N</span>
+            </h1>
+            <p class="hero-tagline">CIDROTHÈQUE & DISTRIBUTION</p>
+            <p class="hero-address">3 rue Jacques Jansen • 1030 Schaerbeek</p>
+            <div style="animation: fadeInUp 1s ease-out 1s both;">
+                <a href="/shop" class="cta-button">
+                    <i class="fas fa-shopping-cart mr-2"></i>
+                    Découvrir nos Cidres
+                </a>
+            </div>
+        </div>
+        
+        <div class="scroll-indicator">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- Section CIDROTHÈQUE -->
+    <section class="content-section section-light" id="about">
+        <div class="section-content">
+            <div class="animate-on-scroll">
+                <h2 class="text-5xl font-bold text-center mb-12" style="font-family: 'Playfair Display', serif; color: var(--dark-color);">
+                    CIDROTHÈQUE
+                </h2>
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <p class="text-xl leading-relaxed mb-6" style="color: #5a5a5a;">
+                            <strong>JORAN – Cidrothèque est le premier bar et caviste dédié aux cidres en Belgique !</strong> 
+                            Venez découvrir plus de 150 références de cidres et poirés en bouteille et au fût.
+                        </p>
+                        <p class="text-lg leading-relaxed italic" style="color: #6a6a6a;">
+                            JORAN – Cidrothèque is the first bar and bottle shop dedicated to cider in Belgium! 
+                            Discover more than 150 ciders and perries in bottles and on tap.
+                        </p>
+                    </div>
+                    <div class="flex justify-center">
+                        <div class="info-card" style="max-width: 400px;">
+                            <i class="fas fa-glass-cheers card-icon"></i>
+                            <h3 class="card-title">150+ Références</h3>
+                            <p class="card-text">
+                                Une sélection exceptionnelle de cidres artisanaux de Belgique et d'ailleurs.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Parallax Image Section -->
+    <div class="parallax-image" style={`background-image: url(${concertImage.src});`}>
+        <div class="parallax-overlay"></div>
+        <h2 class="parallax-text">Musique Live & Ambiance Conviviale</h2>
+    </div>
+
+    <!-- Section MUSIC -->
+    <section class="content-section section-accent">
+        <div class="section-content animate-on-scroll">
+            <h2 class="text-5xl font-bold text-center mb-12" style="font-family: 'Playfair Display', serif; color: var(--dark-color);">
+                MUSIC
+            </h2>
+            <div class="info-card">
+                <i class="fas fa-music card-icon"></i>
+                <div class="card-text text-center">
+                    <p class="mb-4 text-lg">
+                        <strong>Les 1er et 3ème dimanches de chaque mois de 16h à 19h :</strong><br>
+                        Irish Music Session (Jam ouverte)
+                    </p>
+                    <p class="mb-4 text-lg">
+                        <strong>Le dernier dimanche de chaque mois de 16h à 19h :</strong><br>
+                        Old Time Music Session (Jam ouverte)
+                    </p>
+                    <hr class="my-6 border-gray-300">
+                    <p class="italic text-gray-600">
+                        Every 1st and 3rd Sundays of the month, from 4pm until at least 7pm: Irish music session (open jam).<br>
+                        Every last Sunday of the month, from 4pm until at least 7pm: Old-time music session (open jam).
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Parallax Image Section - Terrasse -->
+    <div class="parallax-image" style={`background-image: url(${terrasseImage.src});`}>
+        <div class="parallax-overlay"></div>
+        <h2 class="parallax-text">Notre Terrasse Accueillante</h2>
+    </div>
+
+    <!-- Section PETITE RESTAURATION -->
+    <section class="content-section section-light info-section">
+        <div class="section-content">
+            <div class="animate-on-scroll">
+                <h2 class="text-5xl font-bold text-center mb-12" style="font-family: 'Playfair Display', serif; color: var(--dark-color);">
+                    PETITE RESTAURATION
+                </h2>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="info-card">
+                        <i class="fas fa-utensils card-icon"></i>
+                        <h3 class="card-title">En-cas & Planches</h3>
+                        <p class="card-text">
+                            À toute heure notre cuisine vous propose des en-cas salés et planches à partager.
+                        </p>
+                        <p class="card-text italic mt-4 text-gray-600">
+                            Enjoy a quick snack and savoury platters at any time.
+                        </p>
+                    </div>
+                    <div class="info-card">
+                        <i class="fas fa-bread-slice card-icon"></i>
+                        <h3 class="card-title">Galettes Bretonnes</h3>
+                        <p class="card-text">
+                            Du mercredi au dimanche de 19h à 22h, notre chef vous prépare de véritables galettes bretonnes 100% sarrasin.
+                        </p>
+                        <p class="card-text italic mt-4 text-gray-600">
+                            From Wednesday to Sunday from 7pm to 10pm, our chef cooks the authentic breton « galette » 100% buckwheat.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Parallax Image Section - Cidres -->
+    <div class="parallax-image" style={`background-image: url(${cidresImage.src});`}>
+        <div class="parallax-overlay"></div>
+        <h2 class="parallax-text">Une Sélection Exceptionnelle</h2>
+    </div>
+
+    <!-- Section PROFESSIONNELS (B2B) -->
+    <section class="content-section section-dark">
+        <div class="section-content animate-on-scroll">
+            <h2 class="text-5xl font-bold text-center mb-12" style="font-family: 'Playfair Display', serif;">
+                PROFESSIONNELS (B2B)
+            </h2>
+            <div class="text-center">
+                <i class="fas fa-truck text-6xl mb-6" style="color: var(--accent-color);"></i>
+                <p class="text-2xl leading-relaxed max-w-3xl mx-auto">
+                    Nous distribuons bouteilles et fûts sur toute la région Bruxelloise. 
+                    Contactez-nous pour recevoir notre liste de prix professionnels.
+                </p>
+                <a href="mailto:joran.cidres@gmail.com" class="cta-button mt-8">
+                    <i class="fas fa-envelope mr-2"></i>
+                    Demander la Liste Pro
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section WEBSHOP -->
+    <section class="content-section section-light">
+        <div class="section-content animate-on-scroll">
+            <h2 class="text-5xl font-bold text-center mb-12" style="font-family: 'Playfair Display', serif; color: var(--dark-color);">
+                WEBSHOP
+            </h2>
+            <div class="info-card max-w-4xl mx-auto">
+                <i class="fas fa-shopping-bag card-icon"></i>
+                <h3 class="card-title text-center">Commandes de bouteilles livrées à la maison</h3>
+                <p class="card-text text-center mb-6">
+                    Vous pouvez commander une box de cidre Belge, des assortiments de dégustation, 
+                    ou toutes les bouteilles de votre choix parmi notre gamme d'une centaine de références.
+                </p>
+                <p class="card-text text-center italic text-gray-600 mb-8">
+                    Order bottles for home delivery. You can order a Belgian Cider Box, tasting assortment 
+                    or the bottles of your choice from our list of about 100 references.
+                </p>
+                <div class="text-center">
+                    <a href="/shop" class="cta-button">
+                        <i class="fas fa-shopping-cart mr-2"></i>
+                        Voir la Boutique
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section INFOS & CONTACT -->
+    <section class="content-section section-dark" id="contact">
+        <div class="section-content">
+            <h2 class="text-5xl font-bold text-center mb-12" style="font-family: 'Playfair Display', serif;">
+                INFOS & CONTACT
+            </h2>
+            
+            <div class="contact-grid">
+                <div class="contact-item animate-on-scroll">
+                    <i class="fas fa-map-marker-alt contact-icon"></i>
+                    <h3 class="text-2xl font-bold mb-3">Adresse</h3>
+                    <p>Jacques Jansen 3</p>
+                    <p>1030, Bruxelles – Brussel – Brussels</p>
+                </div>
+                
+                <div class="contact-item animate-on-scroll" style="animation-delay: 0.2s;">
+                    <i class="fas fa-phone contact-icon"></i>
+                    <h3 class="text-2xl font-bold mb-3">Téléphone</h3>
+                    <p><a href="tel:+3223150144" class="hover:text-yellow-300">02 315 01 44</a></p>
+                </div>
+                
+                <div class="contact-item animate-on-scroll" style="animation-delay: 0.4s;">
+                    <i class="fas fa-envelope contact-icon"></i>
+                    <h3 class="text-2xl font-bold mb-3">Email</h3>
+                    <p><a href="mailto:joran.cidres@gmail.com" class="hover:text-yellow-300">joran.cidres@gmail.com</a></p>
+                </div>
+            </div>
+            
+            <div class="mt-12 animate-on-scroll">
+                <h3 class="text-3xl font-bold text-center mb-6">Heures d'ouverture • Opening times</h3>
+                <table class="hours-table max-w-3xl mx-auto">
+                    <tr>
+                        <td class="font-semibold">Lundi / Monday</td>
+                        <td class="text-right">Fermé – Closed</td>
+                    </tr>
+                    <tr>
+                        <td class="font-semibold">Mardi / Tuesday</td>
+                        <td class="text-right">Fermé – Closed</td>
+                    </tr>
+                    <tr>
+                        <td class="font-semibold">Mercredi / Wednesday</td>
+                        <td class="text-right">17:30 – 00:00</td>
+                    </tr>
+                    <tr>
+                        <td class="font-semibold">Jeudi / Thursday</td>
+                        <td class="text-right">17:30 – 00:00</td>
+                    </tr>
+                    <tr>
+                        <td class="font-semibold">Vendredi / Friday</td>
+                        <td class="text-right">17:30 – 01:00</td>
+                    </tr>
+                    <tr>
+                        <td class="font-semibold">Samedi / Saturday</td>
+                        <td class="text-right">16:00 – 01:00</td>
+                    </tr>
+                    <tr>
+                        <td class="font-semibold">Dimanche / Sunday</td>
+                        <td class="text-right">16:00 – 23:00</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section NEWSLETTER -->
+    <section class="content-section section-accent">
+        <div class="section-content animate-on-scroll text-center">
+            <h2 class="text-5xl font-bold mb-6" style="font-family: 'Playfair Display', serif; color: var(--dark-color);">
+                NEWSLETTER
+            </h2>
+            <p class="text-xl mb-8" style="color: #5a5a5a;">
+                Concerts, événements, nouveautés... Inscrivez-vous à notre newsletter pour suivre nos actualités !
+            </p>
+            <form class="newsletter-form" onsubmit="return false;">
+                <input type="email" class="newsletter-input" placeholder="Votre adresse email" required style="color: var(--dark-color); background: white;">
+                <button type="submit" class="cta-button">
+                    <i class="fas fa-paper-plane mr-2"></i>
+                    S'inscrire
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="max-w-7xl mx-auto">
+            <h3 class="text-3xl font-bold mb-4" style="font-family: 'Playfair Display', serif; color: var(--primary-color);">JORAN</h3>
+            <p class="text-lg mb-4">La Première Cidrothèque de Belgique</p>
+            
+            <div class="social-links">
+                <a href="https://facebook.com/joran" target="_blank" class="social-link">
+                    <i class="fab fa-facebook"></i>
+                </a>
+                <a href="https://instagram.com/joran" target="_blank" class="social-link">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="mailto:joran.cidres@gmail.com" class="social-link">
+                    <i class="fas fa-envelope"></i>
+                </a>
+            </div>
+            
+            <p class="mt-8 text-sm opacity-70">
+                © 2025 JORAN Cidrothèque. Tous droits réservés.
+            </p>
+        </div>
+    </footer>
 </Layout>
