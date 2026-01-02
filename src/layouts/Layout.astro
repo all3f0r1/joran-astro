@@ -1,24 +1,217 @@
 ---
-import '../styles/global.css';
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "JORAN - La première cidrothèque de Belgique. Découvrez plus de 150 cidres et poirés artisanaux." } = Astro.props;
 ---
+
 <!doctype html>
 <html lang="fr">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>JORAN - Cidrothèque & Distribution</title>
-		<link rel="preconnect" href="https://fonts.googleapis.com">
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-		<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Poppins:wght@300;400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-		<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-	</head>
-	<body>
-		<slot />
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-		<script is:inline src="/scripts/home.js"></script>
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <slot />
+  </body>
 </html>
+
+<style is:global>
+  :root {
+    --color-primary: #1a3a5c; /* Bleu marine breton */
+    --color-secondary: #d4af37; /* Or cidre */
+    --color-accent: #8b0000; /* Rouge profond */
+    --color-hermine: #f8f9fa; /* Blanc cassé */
+    --color-dark: #1a1a1a;
+    --color-text: #2d3436;
+    --color-text-light: #636e72;
+    
+    --font-heading: 'Cinzel', serif;
+    --font-body: 'Lato', sans-serif;
+    
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 2rem;
+    --spacing-lg: 4rem;
+    --spacing-xl: 6rem;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-body);
+    color: var(--color-text);
+    line-height: 1.6;
+    background-color: var(--color-hermine);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    color: var(--color-primary);
+    line-height: 1.2;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+  }
+
+  h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 600;
+  }
+
+  h3 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 600;
+  }
+
+  p {
+    margin-bottom: var(--spacing-sm);
+  }
+
+  a {
+    color: var(--color-secondary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  a:hover {
+    color: var(--color-accent);
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+  }
+
+  .section {
+    padding: var(--spacing-xl) 0;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 1rem 2.5rem;
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--color-primary), #2c5f8d);
+    color: white;
+    box-shadow: 0 4px 15px rgba(26, 58, 92, 0.3);
+  }
+
+  .btn-primary:hover {
+    background: linear-gradient(135deg, #2c5f8d, var(--color-primary));
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(26, 58, 92, 0.4);
+  }
+
+  .btn-secondary {
+    background: linear-gradient(135deg, var(--color-secondary), #c99d2e);
+    color: var(--color-dark);
+    box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+  }
+
+  .btn-secondary:hover {
+    background: linear-gradient(135deg, #c99d2e, var(--color-secondary));
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+  }
+
+  /* Motif décoratif breton */
+  .celtic-border {
+    position: relative;
+    padding: var(--spacing-md) 0;
+  }
+
+  .celtic-border::before,
+  .celtic-border::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 3px;
+    background: linear-gradient(90deg, 
+      transparent, 
+      var(--color-secondary) 20%, 
+      var(--color-secondary) 80%, 
+      transparent
+    );
+  }
+
+  .celtic-border::before {
+    top: 0;
+  }
+
+  .celtic-border::after {
+    bottom: 0;
+  }
+
+  /* Motif hermine */
+  .hermine-pattern {
+    position: relative;
+  }
+
+  .hermine-pattern::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      radial-gradient(circle at 20px 20px, var(--color-primary) 2px, transparent 2px),
+      radial-gradient(circle at 80px 80px, var(--color-primary) 2px, transparent 2px);
+    background-size: 100px 100px;
+    opacity: 0.03;
+    pointer-events: none;
+  }
+
+  @media (max-width: 768px) {
+    .section {
+      padding: var(--spacing-lg) 0;
+    }
+    
+    .container {
+      padding: 0 var(--spacing-sm);
+    }
+  }
+</style>

@@ -1,0 +1,149 @@
+---
+/**
+ * Composant d'image optimisée avec support WebP et lazy loading
+ * 
+ * Usage:
+ * <OptimizedImage 
+ *   src="/images/photo.jpg" 
+ *   alt="Description"
+ *   width={800}
+ *   height={600}
+ *   loading="lazy"
+ * />
+ */
+
+interface Props {
+  src: string;
+  alt: string;
+  width?: number;
+  height?: number;
+  loading?: 'lazy' | 'eager';
+  class?: string;
+  sizes?: string;
+  objectFit?: 'cover' | 'contain' | 'fill' | 'none' | 'scale-down';
+}
+
+const {
+  src,
+  alt,
+  width,
+  height,
+  loading = 'lazy',
+  class: className = '',
+  sizes = '100vw',
+  objectFit = 'cover'
+} = Astro.props;
+
+// Générer les chemins WebP
+const getWebPPath = (originalSrc: string) => {
+  const lastDot = originalSrc.lastIndexOf('.');
+  if (lastDot === -1) return originalSrc + '.webp';
+  return originalSrc.substring(0, lastDot) + '.webp';
+};
+
+const webpSrc = getWebPPath(src);
+
+// Générer les srcsets pour différentes tailles
+const generateSrcset = (baseSrc: string, sizes: number[] = [400, 800, 1200, 1600]) => {
+  return sizes
+    .map(size => {
+      const ext = baseSrc.substring(baseSrc.lastIndexOf('.'));
+      const base = baseSrc.substring(0, baseSrc.lastIndexOf('.'));
+      return `${base}-${size}w${ext} ${size}w`;
+    })
+    .join(', ');
+};
+
+// Pour cet exemple, on utilise l'image originale si les versions optimisées n'existent pas encore
+const fallbackSrcset = src;
+---
+
+<picture class={`optimized-image ${className}`}>
+  <!-- WebP avec srcset pour différentes tailles -->
+  <source
+    type="image/webp"
+    srcset={webpSrc}
+    sizes={sizes}
+  />
+  
+  <!-- Format original en fallback -->
+  <source
+    type={src.endsWith('.jpg') || src.endsWith('.jpeg') ? 'image/jpeg' : 'image/png'}
+    srcset={fallbackSrcset}
+    sizes={sizes}
+  />
+  
+  <!-- Image de fallback -->
+  <img
+    src={src}
+    alt={alt}
+    width={width}
+    height={height}
+    loading={loading}
+    decoding="async"
+    style={`object-fit: ${objectFit};`}
+    class="responsive-img"
+  />
+</picture>
+
+<style>
+  .optimized-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .responsive-img {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  /* Effet de fondu lors du chargement */
+  .responsive-img {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  .responsive-img[loading="lazy"] {
+    background: linear-gradient(
+      90deg,
+      #f0f0f0 0%,
+      #f8f8f8 20%,
+      #f0f0f0 40%,
+      #f0f0f0 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  .responsive-img.loaded {
+    opacity: 1;
+  }
+</style>
+
+<script>
+  // Ajouter la classe 'loaded' quand l'image est chargée
+  document.addEventListener('DOMContentLoaded', () => {
+    const images = document.querySelectorAll('.responsive-img');
+    
+    images.forEach((img) => {
+      if ((img as HTMLImageElement).complete) {
+        img.classList.add('loaded');
+      } else {
+        img.addEventListener('load', () => {
+          img.classList.add('loaded');
+        });
+      }
+    });
+  });
+</script>

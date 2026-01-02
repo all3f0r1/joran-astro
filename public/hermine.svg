@@ -1,0 +1,52 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Motif hermine stylisé breton -->
+  <defs>
+    <style>
+      .hermine-primary { fill: #1a3a5c; }
+      .hermine-gold { fill: #d4af37; }
+    </style>
+  </defs>
+  
+  <!-- Centre -->
+  <circle cx="100" cy="100" r="20" class="hermine-primary"/>
+  
+  <!-- Croix supérieure -->
+  <path d="M 100,20 L 85,45 L 70,35 L 80,20 Z" class="hermine-primary"/>
+  <path d="M 100,20 L 115,45 L 130,35 L 120,20 Z" class="hermine-primary"/>
+  <circle cx="100" cy="30" r="8" class="hermine-gold"/>
+  
+  <!-- Croix inférieure -->
+  <path d="M 100,180 L 85,155 L 70,165 L 80,180 Z" class="hermine-primary"/>
+  <path d="M 100,180 L 115,155 L 130,165 L 120,180 Z" class="hermine-primary"/>
+  <circle cx="100" cy="170" r="8" class="hermine-gold"/>
+  
+  <!-- Croix gauche -->
+  <path d="M 20,100 L 45,85 L 35,70 L 20,80 Z" class="hermine-primary"/>
+  <path d="M 20,100 L 45,115 L 35,130 L 20,120 Z" class="hermine-primary"/>
+  <circle cx="30" cy="100" r="8" class="hermine-gold"/>
+  
+  <!-- Croix droite -->
+  <path d="M 180,100 L 155,85 L 165,70 L 180,80 Z" class="hermine-primary"/>
+  <path d="M 180,100 L 155,115 L 165,130 L 180,120 Z" class="hermine-primary"/>
+  <circle cx="170" cy="100" r="8" class="hermine-gold"/>
+  
+  <!-- Croix diagonale supérieure gauche -->
+  <path d="M 40,40 L 55,60 L 45,70 L 30,55 Z" class="hermine-primary"/>
+  <path d="M 40,40 L 60,55 L 70,45 L 55,30 Z" class="hermine-primary"/>
+  <circle cx="45" cy="45" r="6" class="hermine-gold"/>
+  
+  <!-- Croix diagonale supérieure droite -->
+  <path d="M 160,40 L 145,60 L 155,70 L 170,55 Z" class="hermine-primary"/>
+  <path d="M 160,40 L 140,55 L 130,45 L 145,30 Z" class="hermine-primary"/>
+  <circle cx="155" cy="45" r="6" class="hermine-gold"/>
+  
+  <!-- Croix diagonale inférieure gauche -->
+  <path d="M 40,160 L 55,140 L 45,130 L 30,145 Z" class="hermine-primary"/>
+  <path d="M 40,160 L 60,145 L 70,155 L 55,170 Z" class="hermine-primary"/>
+  <circle cx="45" cy="155" r="6" class="hermine-gold"/>
+  
+  <!-- Croix diagonale inférieure droite -->
+  <path d="M 160,160 L 145,140 L 155,130 L 170,145 Z" class="hermine-primary"/>
+  <path d="M 160,160 L 140,145 L 130,155 L 145,170 Z" class="hermine-primary"/>
+  <circle cx="155" cy="155" r="6" class="hermine-gold"/>
+</svg>

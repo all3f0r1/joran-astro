@@ -1,316 +1,1142 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import concertImage from '../assets/images/concert.jpg';
-import terrasseImage from '../assets/images/terrasse.webp';
-import cidresImage from '../assets/images/cidres.jpeg';
+import OptimizedImage from '../components/OptimizedImage.astro';
 ---
 
-<Layout>
-    <!-- Navigation Sticky -->
-    <nav class="nav-bar" id="navbar">
-        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-            <a href="#home" class="text-2xl font-bold" style="font-family: 'Playfair Display', serif; color: var(--primary-color);">JORAN</a>
-            <div class="flex gap-4">
-                <a href="#home" class="nav-link">Accueil</a>
-                <a href="/shop" class="nav-link">Boutique</a>
-                <a href="#about" class="nav-link">À propos</a>
-                <a href="#contact" class="nav-link">Contact</a>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="hero-section" id="home">
-        <div class="hero-bg-layer"></div>
-        
-        <!-- Floating Bubbles -->
-        <div class="floating-bubbles" id="bubbles-container"></div>
-        
-        <!-- Floating Elements -->
-        <div class="floating-element apple-leaf" style="top: 15%; left: 10%; animation-delay: 0s;"></div>
-        <div class="floating-element apple-leaf" style="top: 60%; right: 15%; animation-delay: 2s;"></div>
-        <div class="floating-element apple-leaf" style="bottom: 20%; left: 20%; animation-delay: 4s;"></div>
-        
-        <div class="hero-content">
-            <h1 class="hero-logo">
-                <span class="letter">J</span><span class="letter">O</span><span class="letter">R</span><span class="letter">A</span><span class="letter">N</span>
-            </h1>
-            <p class="hero-tagline">CIDROTHÈQUE & DISTRIBUTION</p>
-            <p class="hero-address">3 rue Jacques Jansen • 1030 Schaerbeek</p>
-            <div style="animation: fadeInUp 1s ease-out 1s both;">
-                <a href="/shop" class="cta-button">
-                    <i class="fas fa-shopping-cart mr-2"></i>
-                    Découvrir nos Cidres
-                </a>
-            </div>
-        </div>
-        
-        <div class="scroll-indicator">
-            <i class="fas fa-chevron-down"></i>
-        </div>
-    </section>
-
-    <!-- Section CIDROTHÈQUE -->
-    <section class="content-section section-light" id="about">
-        <div class="section-content">
-            <div class="animate-on-scroll">
-                <h2 class="text-5xl font-bold text-center mb-12" style="font-family: 'Playfair Display', serif; color: var(--dark-color);">
-                    CIDROTHÈQUE
-                </h2>
-                <div class="grid md:grid-cols-2 gap-8 items-center">
-                    <div>
-                        <p class="text-xl leading-relaxed mb-6" style="color: #5a5a5a;">
-                            <strong>JORAN – Cidrothèque est le premier bar et caviste dédié aux cidres en Belgique !</strong> 
-                            Venez découvrir plus de 150 références de cidres et poirés en bouteille et au fût.
-                        </p>
-                        <p class="text-lg leading-relaxed italic" style="color: #6a6a6a;">
-                            JORAN – Cidrothèque is the first bar and bottle shop dedicated to cider in Belgium! 
-                            Discover more than 150 ciders and perries in bottles and on tap.
-                        </p>
-                    </div>
-                    <div class="flex justify-center">
-                        <div class="info-card" style="max-width: 400px;">
-                            <i class="fas fa-glass-cheers card-icon"></i>
-                            <h3 class="card-title">150+ Références</h3>
-                            <p class="card-text">
-                                Une sélection exceptionnelle de cidres artisanaux de Belgique et d'ailleurs.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Parallax Image Section -->
-    <div class="parallax-image" style={`background-image: url(${concertImage.src});`}>
-        <div class="parallax-overlay"></div>
-        <h2 class="parallax-text">Musique Live & Ambiance Conviviale</h2>
+<Layout title="JORAN - Cidrothèque & Distribution">
+  <!-- Navigation -->
+  <nav class="navbar" id="navbar">
+    <div class="container navbar-content">
+      <a href="#home" class="logo">
+        <span class="logo-text">JORAN</span>
+        <span class="logo-subtitle">Cidrothèque</span>
+      </a>
+      
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="#home" class="nav-link">Accueil</a></li>
+        <li><a href="/shop" class="nav-link">Boutique</a></li>
+        <li><a href="#about" class="nav-link">À propos</a></li>
+        <li><a href="#events" class="nav-link">Événements</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
     </div>
+  </nav>
 
-    <!-- Section MUSIC -->
-    <section class="content-section section-accent">
-        <div class="section-content animate-on-scroll">
-            <h2 class="text-5xl font-bold text-center mb-12" style="font-family: 'Playfair Display', serif; color: var(--dark-color);">
-                MUSIC
-            </h2>
-            <div class="info-card">
-                <i class="fas fa-music card-icon"></i>
-                <div class="card-text text-center">
-                    <p class="mb-4 text-lg">
-                        <strong>Les 1er et 3ème dimanches de chaque mois de 16h à 19h :</strong><br>
-                        Irish Music Session (Jam ouverte)
-                    </p>
-                    <p class="mb-4 text-lg">
-                        <strong>Le dernier dimanche de chaque mois de 16h à 19h :</strong><br>
-                        Old Time Music Session (Jam ouverte)
-                    </p>
-                    <hr class="my-6 border-gray-300">
-                    <p class="italic text-gray-600">
-                        Every 1st and 3rd Sundays of the month, from 4pm until at least 7pm: Irish music session (open jam).<br>
-                        Every last Sunday of the month, from 4pm until at least 7pm: Old-time music session (open jam).
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Parallax Image Section - Terrasse -->
-    <div class="parallax-image" style={`background-image: url(${terrasseImage.src});`}>
-        <div class="parallax-overlay"></div>
-        <h2 class="parallax-text">Notre Terrasse Accueillante</h2>
+  <!-- Hero Section -->
+  <section id="home" class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <svg viewBox="0 0 100 100" class="hermine-icon">
+          <path d="M50 20 L35 35 L25 25 L35 15 L50 20 Z M50 20 L65 35 L75 25 L65 15 L50 20 Z M50 80 L35 65 L25 75 L35 85 L50 80 Z M50 80 L65 65 L75 75 L65 85 L50 80 Z M20 50 L35 35 L25 25 L15 35 L20 50 Z M80 50 L65 35 L75 25 L85 35 L80 50 Z M20 50 L35 65 L25 75 L15 65 L20 50 Z M80 50 L65 65 L75 75 L85 65 L80 50 Z M50 50 M40 50 A10 10 0 1 1 60 50 A10 10 0 1 1 40 50" fill="currentColor"/>
+        </svg>
+      </div>
+      <h1 class="hero-title">JORAN</h1>
+      <p class="hero-subtitle">Cidrothèque & Distribution</p>
+      <p class="hero-address">3 rue Jacques Jansen • 1030 Schaerbeek</p>
+      <a href="/shop" class="btn btn-primary">Découvrir nos Cidres</a>
     </div>
-
-    <!-- Section PETITE RESTAURATION -->
-    <section class="content-section section-light info-section">
-        <div class="section-content">
-            <div class="animate-on-scroll">
-                <h2 class="text-5xl font-bold text-center mb-12" style="font-family: 'Playfair Display', serif; color: var(--dark-color);">
-                    PETITE RESTAURATION
-                </h2>
-                <div class="grid md:grid-cols-2 gap-8">
-                    <div class="info-card">
-                        <i class="fas fa-utensils card-icon"></i>
-                        <h3 class="card-title">En-cas & Planches</h3>
-                        <p class="card-text">
-                            À toute heure notre cuisine vous propose des en-cas salés et planches à partager.
-                        </p>
-                        <p class="card-text italic mt-4 text-gray-600">
-                            Enjoy a quick snack and savoury platters at any time.
-                        </p>
-                    </div>
-                    <div class="info-card">
-                        <i class="fas fa-bread-slice card-icon"></i>
-                        <h3 class="card-title">Galettes Bretonnes</h3>
-                        <p class="card-text">
-                            Du mercredi au dimanche de 19h à 22h, notre chef vous prépare de véritables galettes bretonnes 100% sarrasin.
-                        </p>
-                        <p class="card-text italic mt-4 text-gray-600">
-                            From Wednesday to Sunday from 7pm to 10pm, our chef cooks the authentic breton « galette » 100% buckwheat.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Parallax Image Section - Cidres -->
-    <div class="parallax-image" style={`background-image: url(${cidresImage.src});`}>
-        <div class="parallax-overlay"></div>
-        <h2 class="parallax-text">Une Sélection Exceptionnelle</h2>
+    <div class="hero-decoration">
+      <div class="decoration-line"></div>
+      <div class="decoration-circle"></div>
+      <div class="decoration-line"></div>
     </div>
+    <div class="scroll-indicator">
+      <span></span>
+    </div>
+  </section>
 
-    <!-- Section PROFESSIONNELS (B2B) -->
-    <section class="content-section section-dark">
-        <div class="section-content animate-on-scroll">
-            <h2 class="text-5xl font-bold text-center mb-12" style="font-family: 'Playfair Display', serif;">
-                PROFESSIONNELS (B2B)
-            </h2>
-            <div class="text-center">
-                <i class="fas fa-truck text-6xl mb-6" style="color: var(--accent-color);"></i>
-                <p class="text-2xl leading-relaxed max-w-3xl mx-auto">
-                    Nous distribuons bouteilles et fûts sur toute la région Bruxelloise. 
-                    Contactez-nous pour recevoir notre liste de prix professionnels.
-                </p>
-                <a href="mailto:joran.cidres@gmail.com" class="cta-button mt-8">
-                    <i class="fas fa-envelope mr-2"></i>
-                    Demander la Liste Pro
-                </a>
-            </div>
-        </div>
-    </section>
+  <!-- Parallax Section 1 - Bouteilles -->
+  <section class="parallax-section parallax-bottles" data-speed="0.5">
+    <div class="parallax-overlay"></div>
+    <div class="parallax-content">
+      <p class="parallax-quote">"Le cidre, c'est la poésie de la pomme"</p>
+    </div>
+  </section>
 
-    <!-- Section WEBSHOP -->
-    <section class="content-section section-light">
-        <div class="section-content animate-on-scroll">
-            <h2 class="text-5xl font-bold text-center mb-12" style="font-family: 'Playfair Display', serif; color: var(--dark-color);">
-                WEBSHOP
-            </h2>
-            <div class="info-card max-w-4xl mx-auto">
-                <i class="fas fa-shopping-bag card-icon"></i>
-                <h3 class="card-title text-center">Commandes de bouteilles livrées à la maison</h3>
-                <p class="card-text text-center mb-6">
-                    Vous pouvez commander une box de cidre Belge, des assortiments de dégustation, 
-                    ou toutes les bouteilles de votre choix parmi notre gamme d'une centaine de références.
-                </p>
-                <p class="card-text text-center italic text-gray-600 mb-8">
-                    Order bottles for home delivery. You can order a Belgian Cider Box, tasting assortment 
-                    or the bottles of your choice from our list of about 100 references.
-                </p>
-                <div class="text-center">
-                    <a href="/shop" class="cta-button">
-                        <i class="fas fa-shopping-cart mr-2"></i>
-                        Voir la Boutique
-                    </a>
-                </div>
-            </div>
+  <!-- About Section -->
+  <section id="about" class="section about-section hermine-pattern">
+    <div class="container">
+      <div class="section-header celtic-border fade-in">
+        <h2>La Cidrothèque</h2>
+        <p class="section-subtitle">Première de Belgique</p>
+      </div>
+      
+      <div class="about-content">
+        <div class="about-text fade-in">
+          <p class="lead"><strong>JORAN – Cidrothèque</strong> est le premier bar et caviste dédié aux cidres en Belgique !</p>
+          <p>Venez découvrir plus de 150 références de cidres et poirés en bouteille et au fût, sélectionnés avec passion parmi les meilleurs producteurs artisanaux de Belgique et d'ailleurs.</p>
+          <p class="english-text"><em>JORAN – Cidrothèque is the first bar and bottle shop dedicated to cider in Belgium! Discover more than 150 ciders and perries in bottles and on tap.</em></p>
         </div>
-    </section>
+        
+        <div class="about-features">
+          <div class="feature-card fade-in" style="animation-delay: 0.1s">
+            <div class="feature-icon">🍎</div>
+            <h3>150+ Références</h3>
+            <p>Une sélection exceptionnelle de cidres artisanaux de Belgique et d'ailleurs</p>
+          </div>
+          <div class="feature-card fade-in" style="animation-delay: 0.2s">
+            <div class="feature-icon">🎵</div>
+            <h3>Musique Live</h3>
+            <p>Sessions irlandaises et Old Time tous les dimanches</p>
+          </div>
+          <div class="feature-card fade-in" style="animation-delay: 0.3s">
+            <div class="feature-icon">🥞</div>
+            <h3>Galettes Bretonnes</h3>
+            <p>Authentiques galettes 100% sarrasin préparées par notre chef</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <!-- Section INFOS & CONTACT -->
-    <section class="content-section section-dark" id="contact">
-        <div class="section-content">
-            <h2 class="text-5xl font-bold text-center mb-12" style="font-family: 'Playfair Display', serif;">
-                INFOS & CONTACT
-            </h2>
-            
-            <div class="contact-grid">
-                <div class="contact-item animate-on-scroll">
-                    <i class="fas fa-map-marker-alt contact-icon"></i>
-                    <h3 class="text-2xl font-bold mb-3">Adresse</h3>
-                    <p>Jacques Jansen 3</p>
-                    <p>1030, Bruxelles – Brussel – Brussels</p>
-                </div>
-                
-                <div class="contact-item animate-on-scroll" style="animation-delay: 0.2s;">
-                    <i class="fas fa-phone contact-icon"></i>
-                    <h3 class="text-2xl font-bold mb-3">Téléphone</h3>
-                    <p><a href="tel:+3223150144" class="hover:text-yellow-300">02 315 01 44</a></p>
-                </div>
-                
-                <div class="contact-item animate-on-scroll" style="animation-delay: 0.4s;">
-                    <i class="fas fa-envelope contact-icon"></i>
-                    <h3 class="text-2xl font-bold mb-3">Email</h3>
-                    <p><a href="mailto:joran.cidres@gmail.com" class="hover:text-yellow-300">joran.cidres@gmail.com</a></p>
-                </div>
-            </div>
-            
-            <div class="mt-12 animate-on-scroll">
-                <h3 class="text-3xl font-bold text-center mb-6">Heures d'ouverture • Opening times</h3>
-                <table class="hours-table max-w-3xl mx-auto">
-                    <tr>
-                        <td class="font-semibold">Lundi / Monday</td>
-                        <td class="text-right">Fermé – Closed</td>
-                    </tr>
-                    <tr>
-                        <td class="font-semibold">Mardi / Tuesday</td>
-                        <td class="text-right">Fermé – Closed</td>
-                    </tr>
-                    <tr>
-                        <td class="font-semibold">Mercredi / Wednesday</td>
-                        <td class="text-right">17:30 – 00:00</td>
-                    </tr>
-                    <tr>
-                        <td class="font-semibold">Jeudi / Thursday</td>
-                        <td class="text-right">17:30 – 00:00</td>
-                    </tr>
-                    <tr>
-                        <td class="font-semibold">Vendredi / Friday</td>
-                        <td class="text-right">17:30 – 01:00</td>
-                    </tr>
-                    <tr>
-                        <td class="font-semibold">Samedi / Saturday</td>
-                        <td class="text-right">16:00 – 01:00</td>
-                    </tr>
-                    <tr>
-                        <td class="font-semibold">Dimanche / Sunday</td>
-                        <td class="text-right">16:00 – 23:00</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-    </section>
+  <!-- Parallax Section 2 - Ambiance -->
+  <section class="parallax-section parallax-ambiance" data-speed="0.6">
+    <div class="parallax-overlay"></div>
+    <div class="parallax-content">
+      <p class="parallax-quote">Une ambiance chaleureuse au cœur de Bruxelles</p>
+    </div>
+  </section>
 
-    <!-- Section NEWSLETTER -->
-    <section class="content-section section-accent">
-        <div class="section-content animate-on-scroll text-center">
-            <h2 class="text-5xl font-bold mb-6" style="font-family: 'Playfair Display', serif; color: var(--dark-color);">
-                NEWSLETTER
-            </h2>
-            <p class="text-xl mb-8" style="color: #5a5a5a;">
-                Concerts, événements, nouveautés... Inscrivez-vous à notre newsletter pour suivre nos actualités !
-            </p>
-            <form class="newsletter-form" onsubmit="return false;">
-                <input type="email" class="newsletter-input" placeholder="Votre adresse email" required style="color: var(--dark-color); background: white;">
-                <button type="submit" class="cta-button">
-                    <i class="fas fa-paper-plane mr-2"></i>
-                    S'inscrire
-                </button>
-            </form>
+  <!-- Events Section -->
+  <section id="events" class="section events-section">
+    <div class="container">
+      <div class="section-header celtic-border fade-in">
+        <h2>Musique Live & Ambiance Conviviale</h2>
+      </div>
+      
+      <div class="events-grid">
+        <div class="event-card fade-in" style="animation-delay: 0.1s">
+          <div class="event-date">
+            <span class="date-day">1er & 3e</span>
+            <span class="date-month">Dimanches</span>
+          </div>
+          <div class="event-details">
+            <h3>Irish Music Session</h3>
+            <p class="event-time">16h - 19h</p>
+            <p>Jam session ouverte à tous les musiciens de musique irlandaise</p>
+            <p class="english-text"><em>Open jam session for Irish music enthusiasts</em></p>
+          </div>
         </div>
-    </section>
+        
+        <div class="event-card fade-in" style="animation-delay: 0.2s">
+          <div class="event-date">
+            <span class="date-day">Dernier</span>
+            <span class="date-month">Dimanche</span>
+          </div>
+          <div class="event-details">
+            <h3>Old Time Music Session</h3>
+            <p class="event-time">16h - 19h</p>
+            <p>Jam session ouverte dédiée à la musique traditionnelle américaine</p>
+            <p class="english-text"><em>Open jam session for Old-time music lovers</em></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="max-w-7xl mx-auto">
-            <h3 class="text-3xl font-bold mb-4" style="font-family: 'Playfair Display', serif; color: var(--primary-color);">JORAN</h3>
-            <p class="text-lg mb-4">La Première Cidrothèque de Belgique</p>
-            
-            <div class="social-links">
-                <a href="https://facebook.com/joran" target="_blank" class="social-link">
-                    <i class="fab fa-facebook"></i>
-                </a>
-                <a href="https://instagram.com/joran" target="_blank" class="social-link">
-                    <i class="fab fa-instagram"></i>
-                </a>
-                <a href="mailto:joran.cidres@gmail.com" class="social-link">
-                    <i class="fas fa-envelope"></i>
-                </a>
-            </div>
-            
-            <p class="mt-8 text-sm opacity-70">
-                © 2025 JORAN Cidrothèque. Tous droits réservés.
-            </p>
+  <!-- Parallax Section 3 - Galettes -->
+  <section class="parallax-section parallax-galettes" data-speed="0.5">
+    <div class="parallax-overlay"></div>
+    <div class="parallax-content">
+      <p class="parallax-quote">Galettes authentiques • Cidres d'exception</p>
+    </div>
+  </section>
+
+  <!-- Food Section -->
+  <section class="section food-section hermine-pattern">
+    <div class="container">
+      <div class="section-header celtic-border fade-in">
+        <h2>Petite Restauration</h2>
+      </div>
+      
+      <div class="food-grid">
+        <div class="food-card fade-in" style="animation-delay: 0.1s">
+          <div class="food-icon">🧀</div>
+          <h3>En-cas & Planches</h3>
+          <p>À toute heure, notre cuisine vous propose des en-cas salés et planches à partager</p>
+          <p class="english-text"><em>Enjoy a quick snack and savoury platters at any time</em></p>
         </div>
-    </footer>
+        
+        <div class="food-card featured fade-in" style="animation-delay: 0.2s">
+          <div class="food-badge">Spécialité Bretonne</div>
+          <div class="food-icon">🥞</div>
+          <h3>Galettes Bretonnes</h3>
+          <p class="food-time">Mercredi - Dimanche | 19h - 22h</p>
+          <p>Notre chef vous prépare de véritables galettes bretonnes 100% sarrasin</p>
+          <p class="english-text"><em>From Wednesday to Sunday from 7pm to 10pm, our chef cooks authentic breton "galette" 100% buckwheat</em></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Parallax Section 4 - Terrasse -->
+  <section class="parallax-section parallax-terrasse" data-speed="0.4">
+    <div class="parallax-overlay"></div>
+    <div class="parallax-content">
+      <p class="parallax-quote">Notre terrasse vous accueille aux beaux jours</p>
+    </div>
+  </section>
+
+  <!-- Professional Section -->
+  <section class="section pro-section">
+    <div class="container">
+      <div class="pro-content">
+        <div class="pro-text fade-in" style="animation-delay: 0.1s">
+          <h2>Professionnels (B2B)</h2>
+          <p>Nous distribuons bouteilles et fûts sur toute la région Bruxelloise.</p>
+          <p>Contactez-nous pour recevoir notre liste de prix professionnels.</p>
+          <a href="mailto:joran.cidres@gmail.com" class="btn btn-secondary">Demander la Liste Pro</a>
+        </div>
+        
+        <div class="pro-text fade-in" style="animation-delay: 0.2s">
+          <h2>Webshop</h2>
+          <p><strong>Commandes de bouteilles livrées à la maison</strong></p>
+          <p>Vous pouvez commander une box de cidre Belge, des assortiments de dégustation, ou toutes les bouteilles de votre choix parmi notre gamme.</p>
+          <p class="english-text"><em>Order bottles for home delivery. You can order a Belgian Cider Box, tasting assortment or the bottles of your choice from our list.</em></p>
+          <a href="/shop" class="btn btn-primary">Voir la Boutique</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="section contact-section hermine-pattern">
+    <div class="container">
+      <div class="section-header celtic-border fade-in">
+        <h2>Infos & Contact</h2>
+      </div>
+      
+      <div class="contact-grid">
+        <div class="contact-card fade-in" style="animation-delay: 0.1s">
+          <h3>📍 Adresse</h3>
+          <p>Jacques Jansen 3<br>1030, Bruxelles – Brussel – Brussels</p>
+        </div>
+        
+        <div class="contact-card fade-in" style="animation-delay: 0.2s">
+          <h3>📞 Téléphone</h3>
+          <p><a href="tel:+3223150144">02 315 01 44</a></p>
+        </div>
+        
+        <div class="contact-card fade-in" style="animation-delay: 0.3s">
+          <h3>✉️ Email</h3>
+          <p><a href="mailto:joran.cidres@gmail.com">joran.cidres@gmail.com</a></p>
+        </div>
+      </div>
+      
+      <div class="hours-table fade-in" style="animation-delay: 0.4s">
+        <h3>Heures d'ouverture • Opening times</h3>
+        <table>
+          <tr>
+            <td>Lundi / Monday</td>
+            <td class="closed">Fermé – Closed</td>
+          </tr>
+          <tr>
+            <td>Mardi / Tuesday</td>
+            <td class="closed">Fermé – Closed</td>
+          </tr>
+          <tr>
+            <td>Mercredi / Wednesday</td>
+            <td>17:30 – 00:00</td>
+          </tr>
+          <tr>
+            <td>Jeudi / Thursday</td>
+            <td>17:30 – 00:00</td>
+          </tr>
+          <tr>
+            <td>Vendredi / Friday</td>
+            <td>17:30 – 01:00</td>
+          </tr>
+          <tr>
+            <td>Samedi / Saturday</td>
+            <td>16:00 – 01:00</td>
+          </tr>
+          <tr>
+            <td>Dimanche / Sunday</td>
+            <td>16:00 – 23:00</td>
+          </tr>
+        </table>
+      </div>
+      
+      <div class="newsletter fade-in" style="animation-delay: 0.5s">
+        <h3>Newsletter</h3>
+        <p>Concerts, événements, nouveautés... Inscrivez-vous pour suivre nos actualités !</p>
+        <form class="newsletter-form">
+          <input type="email" placeholder="Votre email" required>
+          <button type="submit" class="btn btn-primary">S'inscrire</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <h3>JORAN</h3>
+          <p>La Première Cidrothèque de Belgique</p>
+        </div>
+        <div class="footer-social">
+          <a href="#" aria-label="Facebook">📘</a>
+          <a href="#" aria-label="Instagram">📷</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 JORAN Cidrothèque. Tous droits réservés.</p>
+      </div>
+    </div>
+  </footer>
 </Layout>
+
+<style>
+  /* Navigation */
+  .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: linear-gradient(180deg, rgba(26, 58, 92, 0.98) 0%, rgba(26, 58, 92, 0.95) 100%);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+
+  .navbar.nav-hidden {
+    transform: translateY(-100%);
+  }
+
+  .navbar-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem var(--spacing-md);
+  }
+
+  .logo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    color: white;
+    z-index: 1001;
+  }
+
+  .logo-text {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    line-height: 1;
+  }
+
+  .logo-subtitle {
+    font-size: 0.75rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--color-secondary);
+    margin-top: 0.25rem;
+  }
+
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    z-index: 1001;
+  }
+
+  .nav-toggle span {
+    width: 25px;
+    height: 2px;
+    background: white;
+    transition: all 0.3s ease;
+  }
+
+  .nav-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(7px, 7px);
+  }
+
+  .nav-toggle.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .nav-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px);
+  }
+
+  .nav-menu {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-menu a {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    color: white;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    transition: color 0.3s ease;
+  }
+
+  .nav-menu a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background: var(--color-secondary);
+    transition: width 0.3s ease;
+  }
+
+  .nav-menu a:hover,
+  .nav-menu a.active {
+    color: var(--color-secondary);
+  }
+
+  .nav-menu a:hover::after,
+  .nav-menu a.active::after {
+    width: 100%;
+  }
+
+  /* Hero Section */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, var(--color-primary) 0%, #2c5f8d 50%, var(--color-primary) 100%);
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+      repeating-linear-gradient(45deg, transparent, transparent 50px, rgba(255, 255, 255, 0.02) 50px, rgba(255, 255, 255, 0.02) 100px);
+    pointer-events: none;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 30% 50%, rgba(212, 175, 55, 0.1) 0%, transparent 50%);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    color: white;
+    padding: var(--spacing-md);
+  }
+
+  .hero-badge {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 2rem;
+    color: var(--color-secondary);
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .hero-title {
+    font-size: clamp(4rem, 10vw, 8rem);
+    font-weight: 700;
+    letter-spacing: 8px;
+    margin-bottom: 0.5rem;
+    color: white;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    animation: fadeInUp 1s ease;
+  }
+
+  .hero-subtitle {
+    font-family: var(--font-heading);
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--color-secondary);
+    margin-bottom: 1rem;
+    animation: fadeInUp 1s ease 0.2s backwards;
+  }
+
+  .hero-address {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 2rem;
+    letter-spacing: 1px;
+    animation: fadeInUp 1s ease 0.4s backwards;
+  }
+
+  .hero .btn {
+    animation: fadeInUp 1s ease 0.6s backwards;
+  }
+
+  .hero-decoration {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 3rem;
+    animation: fadeInUp 1s ease 0.8s backwards;
+  }
+
+  .decoration-line {
+    width: 100px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--color-secondary), transparent);
+  }
+
+  .decoration-circle {
+    width: 10px;
+    height: 10px;
+    border: 2px solid var(--color-secondary);
+    border-radius: 50%;
+  }
+
+  .scroll-indicator {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: fadeInUp 1s ease 1s backwards;
+  }
+
+  .scroll-indicator span {
+    display: block;
+    width: 30px;
+    height: 50px;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 25px;
+    position: relative;
+  }
+
+  .scroll-indicator span::before {
+    content: '';
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 6px;
+    background: white;
+    border-radius: 50%;
+    animation: scroll 2s infinite;
+  }
+
+  @keyframes scroll {
+    0% { opacity: 1; transform: translateX(-50%) translateY(0); }
+    100% { opacity: 0; transform: translateX(-50%) translateY(20px); }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Parallax Sections */
+  .parallax-section {
+    position: relative;
+    height: 50vh;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow: hidden;
+  }
+
+  .parallax-bottles {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
+                      url('https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=1920&q=80');
+  }
+
+  .parallax-ambiance {
+    background-image: linear-gradient(rgba(26, 58, 92, 0.7), rgba(26, 58, 92, 0.7)), 
+                      url('https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=1920&q=80');
+  }
+
+  .parallax-galettes {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                      url('https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=1920&q=80');
+  }
+
+  .parallax-terrasse {
+    background-image: linear-gradient(rgba(26, 58, 92, 0.6), rgba(26, 58, 92, 0.6)), 
+                      url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1920&q=80');
+  }
+
+  .parallax-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.2);
+  }
+
+  .parallax-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: var(--spacing-md);
+  }
+
+  .parallax-quote {
+    font-family: var(--font-heading);
+    font-size: clamp(1.5rem, 4vw, 3rem);
+    color: white;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+    font-style: italic;
+    letter-spacing: 2px;
+  }
+
+  /* Fade in animation */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 0.8s ease forwards;
+  }
+
+  /* About Section */
+  .about-section {
+    background: white;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .section-subtitle {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    color: var(--color-secondary);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+  }
+
+  .about-content {
+    display: grid;
+    gap: var(--spacing-lg);
+  }
+
+  .about-text {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .lead {
+    font-size: 1.3rem;
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .english-text {
+    color: var(--color-text-light);
+    font-size: 0.95rem;
+  }
+
+  .about-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+  }
+
+  .feature-card {
+    background: var(--color-hermine);
+    padding: var(--spacing-md);
+    border-left: 4px solid var(--color-secondary);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  }
+
+  .feature-icon {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  /* Events Section */
+  .events-section {
+    background: linear-gradient(135deg, var(--color-primary) 0%, #2c5f8d 100%);
+    color: white;
+  }
+
+  .events-section h2,
+  .events-section h3 {
+    color: white;
+  }
+
+  .events-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-md);
+  }
+
+  .event-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: var(--spacing-md);
+    border-radius: 0;
+    border: 2px solid rgba(212, 175, 55, 0.3);
+    display: flex;
+    gap: var(--spacing-md);
+    transition: all 0.3s ease;
+  }
+
+  .event-card:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: var(--color-secondary);
+    transform: translateY(-5px);
+  }
+
+  .event-date {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 100px;
+    padding: var(--spacing-sm);
+    background: var(--color-secondary);
+    color: var(--color-dark);
+    font-family: var(--font-heading);
+  }
+
+  .date-day {
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  .date-month {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+  }
+
+  .event-details {
+    flex: 1;
+  }
+
+  .event-time {
+    color: var(--color-secondary);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Food Section */
+  .food-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-md);
+  }
+
+  .food-card {
+    background: white;
+    padding: var(--spacing-md);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border-top: 4px solid var(--color-secondary);
+    position: relative;
+    transition: all 0.3s ease;
+  }
+
+  .food-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+
+  .food-card.featured {
+    border-top-color: var(--color-accent);
+    background: linear-gradient(135deg, white 0%, #fff8e7 100%);
+  }
+
+  .food-badge {
+    position: absolute;
+    top: -12px;
+    right: var(--spacing-sm);
+    background: var(--color-accent);
+    color: white;
+    padding: 0.25rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .food-icon {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .food-time {
+    color: var(--color-secondary);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  /* Professional Section */
+  .pro-section {
+    background: var(--color-hermine);
+  }
+
+  .pro-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-xl);
+  }
+
+  .pro-text {
+    background: white;
+    padding: var(--spacing-lg);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  }
+
+  .pro-text h2 {
+    margin-bottom: var(--spacing-md);
+  }
+
+  .pro-text .btn {
+    margin-top: var(--spacing-md);
+  }
+
+  /* Contact Section */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .contact-card {
+    background: white;
+    padding: var(--spacing-md);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    text-align: center;
+  }
+
+  .contact-card h3 {
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .hours-table {
+    background: white;
+    padding: var(--spacing-md);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .hours-table h3 {
+    text-align: center;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .hours-table table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .hours-table td {
+    padding: 0.75rem;
+    border-bottom: 1px solid #eee;
+  }
+
+  .hours-table td:first-child {
+    font-weight: 600;
+    color: var(--color-primary);
+  }
+
+  .hours-table td:last-child {
+    text-align: right;
+  }
+
+  .hours-table .closed {
+    color: var(--color-text-light);
+    font-style: italic;
+  }
+
+  .newsletter {
+    background: linear-gradient(135deg, var(--color-primary), #2c5f8d);
+    color: white;
+    padding: var(--spacing-lg);
+    text-align: center;
+  }
+
+  .newsletter h3 {
+    color: white;
+  }
+
+  .newsletter-form {
+    display: flex;
+    gap: var(--spacing-sm);
+    max-width: 500px;
+    margin: var(--spacing-md) auto 0;
+  }
+
+  .newsletter-form input {
+    flex: 1;
+    padding: 1rem;
+    border: none;
+    font-family: var(--font-body);
+    font-size: 1rem;
+  }
+
+  .newsletter-form button {
+    padding: 1rem 2rem;
+  }
+
+  /* Footer */
+  .footer {
+    background: var(--color-dark);
+    color: white;
+    padding: var(--spacing-lg) 0 var(--spacing-md);
+  }
+
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .footer-brand h3 {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    color: var(--color-secondary);
+    margin-bottom: 0.5rem;
+  }
+
+  .footer-brand p {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .footer-social {
+    display: flex;
+    gap: var(--spacing-sm);
+  }
+
+  .footer-social a {
+    font-size: 1.5rem;
+    transition: transform 0.3s ease;
+  }
+
+  .footer-social a:hover {
+    transform: scale(1.2);
+  }
+
+  .footer-bottom {
+    text-align: center;
+    padding-top: var(--spacing-md);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .nav-toggle {
+      display: flex;
+    }
+
+    .nav-menu {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 280px;
+      height: 100vh;
+      background: linear-gradient(180deg, var(--color-primary) 0%, #1a2a3c 100%);
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 100px 2rem 2rem;
+      gap: 2rem;
+      transition: right 0.3s ease;
+      box-shadow: -5px 0 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .nav-menu.active {
+      right: 0;
+    }
+
+    .nav-menu a {
+      font-size: 1.2rem;
+      width: 100%;
+      padding: 0.5rem 0;
+    }
+
+    .hero-title {
+      font-size: 3rem;
+    }
+
+    .newsletter-form {
+      flex-direction: column;
+    }
+
+    .footer-content {
+      flex-direction: column;
+      gap: var(--spacing-md);
+      text-align: center;
+    }
+
+    .event-card {
+      flex-direction: column;
+    }
+
+    .parallax-section {
+      background-attachment: scroll;
+      height: 40vh;
+      min-height: 300px;
+    }
+  }
+</style>
+
+<script>
+  // Mobile menu toggle
+  const navToggle = document.getElementById('navToggle');
+  const navMenu = document.getElementById('navMenu');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  navToggle?.addEventListener('click', () => {
+    navToggle.classList.toggle('active');
+    navMenu?.classList.toggle('active');
+  });
+
+  // Close menu when clicking on a link
+  navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      navToggle?.classList.remove('active');
+      navMenu?.classList.remove('active');
+    });
+  });
+
+  // Close menu when clicking outside
+  document.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement;
+    if (!target.closest('.navbar-content') && navMenu?.classList.contains('active')) {
+      navToggle?.classList.remove('active');
+      navMenu?.classList.remove('active');
+    }
+  });
+
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href') || '');
+      if (target) {
+        const offsetTop = (target as HTMLElement).offsetTop - 80;
+        window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+      }
+    });
+  });
+
+  // Hide/show navbar on scroll
+  let lastScroll = 0;
+  const navbar = document.getElementById('navbar');
+
+  window.addEventListener('scroll', () => {
+    const currentScroll = window.pageYOffset;
+    
+    if (currentScroll <= 0) {
+      navbar?.classList.remove('nav-hidden');
+      return;
+    }
+    
+    if (currentScroll > lastScroll && currentScroll > 100) {
+      navbar?.classList.add('nav-hidden');
+    } else {
+      navbar?.classList.remove('nav-hidden');
+    }
+    
+    lastScroll = currentScroll;
+  });
+
+  // Parallax effect
+  window.addEventListener('scroll', () => {
+    const parallaxSections = document.querySelectorAll('.parallax-section');
+    
+    parallaxSections.forEach((section) => {
+      const scrolled = window.pageYOffset;
+      const rate = scrolled * 0.3;
+      (section as HTMLElement).style.transform = `translateY(${rate}px)`;
+    });
+  });
+
+  // Intersection Observer for fade-in animations
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.animationPlayState = 'running';
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('.fade-in').forEach((el) => {
+    (el as HTMLElement).style.animationPlayState = 'paused';
+    observer.observe(el);
+  });
+
+  // Active nav link on scroll
+  const sections = document.querySelectorAll('section[id]');
+  
+  window.addEventListener('scroll', () => {
+    const scrollY = window.pageYOffset;
+    
+    sections.forEach(section => {
+      const sectionHeight = section.offsetHeight;
+      const sectionTop = section.offsetTop - 100;
+      const sectionId = section.getAttribute('id');
+      
+      if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === `#${sectionId}`) {
+            link.classList.add('active');
+          }
+        });
+      }
+    });
+  });
+</script>
