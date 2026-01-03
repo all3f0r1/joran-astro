@@ -303,9 +303,10 @@ import OptimizedImage from '../components/OptimizedImage.astro';
     left: 0;
     right: 0;
     z-index: 1000;
-    background: linear-gradient(180deg, rgba(26, 58, 92, 0.98) 0%, rgba(26, 58, 92, 0.95) 100%);
+    background: linear-gradient(180deg, rgba(61, 40, 23, 0.98) 0%, rgba(45, 24, 16, 0.95) 100%);
     backdrop-filter: blur(10px);
-    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 20px rgba(61, 40, 23, 0.4), inset 0 -1px 0 rgba(212, 165, 116, 0.2);
+    border-bottom: 3px solid var(--color-accent);
     transition: transform 0.3s ease;
   }
 
@@ -420,7 +421,12 @@ import OptimizedImage from '../components/OptimizedImage.astro';
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(135deg, var(--color-primary) 0%, #2c5f8d 50%, var(--color-primary) 100%);
+    background:
+      linear-gradient(135deg, rgba(61, 40, 23, 0.95) 0%, rgba(139, 69, 19, 0.9) 50%, rgba(61, 40, 23, 0.95) 100%),
+      url('https://images.unsplash.com/photo-1533090161767-e6ffed986c88?w=1920&q=80');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
     overflow: hidden;
   }
 
@@ -431,8 +437,21 @@ import OptimizedImage from '../components/OptimizedImage.astro';
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: 
-      repeating-linear-gradient(45deg, transparent, transparent 50px, rgba(255, 255, 255, 0.02) 50px, rgba(255, 255, 255, 0.02) 100px);
+    background-image:
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 3px,
+        rgba(212, 165, 116, 0.03) 3px,
+        rgba(212, 165, 116, 0.03) 6px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 100px,
+        rgba(139, 69, 19, 0.05) 100px,
+        rgba(139, 69, 19, 0.05) 103px
+      );
     pointer-events: none;
   }
 
@@ -442,7 +461,7 @@ import OptimizedImage from '../components/OptimizedImage.astro';
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(circle at 30% 50%, rgba(212, 175, 55, 0.1) 0%, transparent 50%);
+    background: radial-gradient(circle at 30% 50%, rgba(212, 165, 116, 0.15) 0%, transparent 50%);
   }
 
   .hero-content {
@@ -581,22 +600,22 @@ import OptimizedImage from '../components/OptimizedImage.astro';
   }
 
   .parallax-bottles {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
+    background-image: linear-gradient(rgba(61, 40, 23, 0.6), rgba(139, 69, 19, 0.5)),
                       url('https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=1920&q=80');
   }
 
   .parallax-ambiance {
-    background-image: linear-gradient(rgba(26, 58, 92, 0.7), rgba(26, 58, 92, 0.7)), 
+    background-image: linear-gradient(rgba(139, 111, 71, 0.7), rgba(61, 40, 23, 0.6)),
                       url('https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=1920&q=80');
   }
 
   .parallax-galettes {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+    background-image: linear-gradient(rgba(45, 24, 16, 0.6), rgba(61, 40, 23, 0.5)),
                       url('https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=1920&q=80');
   }
 
   .parallax-terrasse {
-    background-image: linear-gradient(rgba(26, 58, 92, 0.6), rgba(26, 58, 92, 0.6)), 
+    background-image: linear-gradient(rgba(139, 69, 19, 0.65), rgba(61, 40, 23, 0.55)),
                       url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1920&q=80');
   }
 
@@ -679,16 +698,25 @@ import OptimizedImage from '../components/OptimizedImage.astro';
   }
 
   .feature-card {
-    background: var(--color-hermine);
+    background:
+      linear-gradient(135deg, var(--color-hermine) 0%, rgba(212, 165, 116, 0.05) 100%),
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 10px,
+        rgba(61, 40, 23, 0.02) 10px,
+        rgba(61, 40, 23, 0.02) 11px
+      );
     padding: var(--spacing-md);
-    border-left: 4px solid var(--color-secondary);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    border-left: 5px solid var(--color-accent);
+    box-shadow: 0 4px 15px rgba(61, 40, 23, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.5);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
 
   .feature-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 25px rgba(61, 40, 23, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    border-left-color: var(--color-secondary);
   }
 
   .feature-icon {
@@ -698,13 +726,32 @@ import OptimizedImage from '../components/OptimizedImage.astro';
 
   /* Events Section */
   .events-section {
-    background: linear-gradient(135deg, var(--color-primary) 0%, #2c5f8d 100%);
-    color: white;
+    background:
+      linear-gradient(135deg, rgba(61, 40, 23, 0.95) 0%, rgba(139, 69, 19, 0.9) 100%),
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 150px,
+        rgba(212, 165, 116, 0.05) 150px,
+        rgba(212, 165, 116, 0.05) 153px
+      );
+    color: var(--color-hermine);
+    position: relative;
+  }
+
+  .events-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, var(--color-accent), var(--color-secondary), var(--color-accent));
   }
 
   .events-section h2,
   .events-section h3 {
-    color: white;
+    color: var(--color-hermine);
   }
 
   .events-grid {
@@ -714,20 +761,22 @@ import OptimizedImage from '../components/OptimizedImage.astro';
   }
 
   .event-card {
-    background: rgba(255, 255, 255, 0.1);
+    background: linear-gradient(135deg, rgba(212, 165, 116, 0.15), rgba(193, 154, 107, 0.1));
     backdrop-filter: blur(10px);
     padding: var(--spacing-md);
     border-radius: 0;
-    border: 2px solid rgba(212, 175, 55, 0.3);
+    border: 3px solid var(--color-accent);
+    box-shadow: 0 4px 15px rgba(61, 40, 23, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
     display: flex;
     gap: var(--spacing-md);
     transition: all 0.3s ease;
   }
 
   .event-card:hover {
-    background: rgba(255, 255, 255, 0.15);
+    background: linear-gradient(135deg, rgba(212, 165, 116, 0.25), rgba(193, 154, 107, 0.2));
     border-color: var(--color-secondary);
     transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(61, 40, 23, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
   }
 
   .event-date {
@@ -785,20 +834,30 @@ import OptimizedImage from '../components/OptimizedImage.astro';
 
   .food-card.featured {
     border-top-color: var(--color-accent);
-    background: linear-gradient(135deg, white 0%, #fff8e7 100%);
+    background:
+      linear-gradient(135deg, rgba(245, 240, 232, 1) 0%, rgba(212, 165, 116, 0.1) 100%),
+      repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 10px,
+        rgba(139, 69, 19, 0.02) 10px,
+        rgba(139, 69, 19, 0.02) 20px
+      );
+    box-shadow: 0 4px 20px rgba(139, 69, 19, 0.2);
   }
 
   .food-badge {
     position: absolute;
     top: -12px;
     right: var(--spacing-sm);
-    background: var(--color-accent);
-    color: white;
+    background: linear-gradient(135deg, var(--color-accent), var(--color-primary));
+    color: var(--color-hermine);
     padding: 0.25rem 1rem;
     font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 1px;
+    box-shadow: 0 2px 10px rgba(61, 40, 23, 0.4);
   }
 
   .food-icon {
@@ -846,10 +905,26 @@ import OptimizedImage from '../components/OptimizedImage.astro';
   }
 
   .contact-card {
-    background: white;
+    background:
+      linear-gradient(135deg, white 0%, rgba(245, 240, 232, 1) 100%),
+      repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 15px,
+        rgba(139, 69, 19, 0.02) 15px,
+        rgba(139, 69, 19, 0.02) 17px
+      );
     padding: var(--spacing-md);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 15px rgba(61, 40, 23, 0.1);
     text-align: center;
+    border: 2px solid rgba(139, 69, 19, 0.1);
+    transition: all 0.3s ease;
+  }
+
+  .contact-card:hover {
+    border-color: var(--color-secondary);
+    box-shadow: 0 6px 20px rgba(61, 40, 23, 0.15);
+    transform: translateY(-3px);
   }
 
   .contact-card h3 {
@@ -858,10 +933,12 @@ import OptimizedImage from '../components/OptimizedImage.astro';
   }
 
   .hours-table {
-    background: white;
+    background:
+      linear-gradient(to bottom, white 0%, var(--color-hermine) 100%);
     padding: var(--spacing-md);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 15px rgba(61, 40, 23, 0.1);
     margin-bottom: var(--spacing-lg);
+    border: 3px solid var(--color-accent);
   }
 
   .hours-table h3 {
@@ -894,14 +971,24 @@ import OptimizedImage from '../components/OptimizedImage.astro';
   }
 
   .newsletter {
-    background: linear-gradient(135deg, var(--color-primary), #2c5f8d);
-    color: white;
+    background:
+      linear-gradient(135deg, rgba(61, 40, 23, 0.95), rgba(139, 69, 19, 0.9)),
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 5px,
+        rgba(212, 165, 116, 0.05) 5px,
+        rgba(212, 165, 116, 0.05) 10px
+      );
+    color: var(--color-hermine);
     padding: var(--spacing-lg);
     text-align: center;
+    border: 3px solid var(--color-accent);
+    box-shadow: 0 4px 20px rgba(61, 40, 23, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
 
   .newsletter h3 {
-    color: white;
+    color: var(--color-hermine);
   }
 
   .newsletter-form {
@@ -914,9 +1001,18 @@ import OptimizedImage from '../components/OptimizedImage.astro';
   .newsletter-form input {
     flex: 1;
     padding: 1rem;
-    border: none;
+    border: 2px solid var(--color-accent);
+    background: var(--color-hermine);
     font-family: var(--font-body);
     font-size: 1rem;
+    color: var(--color-text);
+    transition: all 0.3s ease;
+  }
+
+  .newsletter-form input:focus {
+    outline: none;
+    border-color: var(--color-secondary);
+    box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.2);
   }
 
   .newsletter-form button {
@@ -925,9 +1021,19 @@ import OptimizedImage from '../components/OptimizedImage.astro';
 
   /* Footer */
   .footer {
-    background: var(--color-dark);
-    color: white;
+    background:
+      linear-gradient(180deg, rgba(45, 24, 16, 1) 0%, rgba(29, 16, 10, 1) 100%),
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 200px,
+        rgba(139, 69, 19, 0.1) 200px,
+        rgba(139, 69, 19, 0.1) 203px
+      );
+    color: var(--color-hermine);
     padding: var(--spacing-lg) 0 var(--spacing-md);
+    border-top: 5px solid var(--color-accent);
+    box-shadow: inset 0 1px 0 rgba(212, 165, 116, 0.2);
   }
 
   .footer-content {
