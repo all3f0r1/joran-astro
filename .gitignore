@@ -19,10 +19,27 @@ pnpm-debug.log*
 
 # environment variables
 .env
+.env.local
 .env.production
+.dev.vars
 
 # macOS-specific files
 .DS_Store
 
 # jetbrains setting folder
 .idea/
+
+# Local database files
+*.db
+*.sqlite
+
+# Optimized images (if not using R2)
+public/images/optimized/
+
+# Secrets and credentials
+*.pem
+*.key
+secrets/
+
+# Wrangler backup files
+wrangler.toml.backup

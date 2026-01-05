@@ -4,12 +4,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-JORAN is a full-stack web application for Belgium's first dedicated cider bar (cidrothèque) and online shop. Built with Astro 5.16.6 using server-side rendering on Cloudflare Workers, featuring a modern design with Irish/Breton cultural themes.
+JORAN is a full-stack web application for Belgium's first dedicated cider bar (cidrothèque) and online shop. Built with Astro 5.16.6 using server-side rendering on Cloudflare Workers.
 
 **Tech Stack:**
-- Framework: Astro 5.16.6 (SSR mode)
+- Framework: Astro 5.16.6 (SSR mode on Cloudflare Workers)
 - Styling: Tailwind CSS 4.1.18 via Vite plugin
-- Deployment: Cloudflare Workers + D1 Database (serverless SQLite)
+- Database: Cloudflare D1 (serverless SQLite)
+- Storage: Cloudflare R2 (for images), KV (for sessions/cache)
 - Language: TypeScript
 - Package Manager: npm
 
@@ -20,241 +21,173 @@ npm run dev              # Start dev server at http://localhost:4321
 npm run build            # Production build for Cloudflare
 npm run preview          # Preview production build locally
 npm run optimize-images  # Generate WebP images and responsive sizes
+npx astro check          # Type check (runs in CI)
+
+# Cloudflare D1 database commands
+wrangler d1 execute joran-production --file=schema.sql                    # Apply schema
+wrangler d1 execute joran-production --command="SELECT * FROM products"   # Run query
+wrangler d1 execute joran-production --local --command="..."              # Local development
+
+# Cloudflare secrets management
+wrangler secret put SECRET_NAME      # Add a secret
+wrangler secret list                 # List all secrets
 ```
 
 ## Architecture
 
-### Server-Side Rendering (SSR)
-The application uses `output: 'server'` in astro.config.mjs, meaning all pages are rendered on Cloudflare's edge network. This enables:
-- Dynamic API routes at `/api/*`
-- Access to Cloudflare D1 database via `Astro.locals.runtime.env.DB`
-- Server-side data fetching before page render
+### Cloudflare Runtime Access Pattern
 
-**Critical:** The Cloudflare runtime is accessed via `locals.runtime.env.DB`, not `Astro.env`. Always check for runtime availability before accessing the database.
+**CRITICAL:** All Cloudflare bindings (D1, KV, R2) are accessed via `locals.runtime.env`, NOT `Astro.env`.
 
-### Layout System
-`src/layouts/Layout.astro` is the master template wrapping all pages. It defines:
-- Global CSS variables (colors, spacing, fonts) - the single source of truth for the design system
-- Responsive utility classes
-- Reusable button styles (`.btn-primary`, `.btn-secondary`)
-- Celtic/Breton decorative classes (`.celtic-border`, `.hermine-pattern`)
-
-**Design System Variables:**
-```css
---color-primary: #1a3a5c     /* Navy blue */
---color-secondary: #d4af37    /* Gold */
---color-accent: #8b0000       /* Deep red */
---color-hermine: #f8f9fa      /* Off-white */
-
---spacing-xs to --spacing-xl  /* 0.5rem to 6rem scale */
-
---font-heading: 'Cinzel'      /* Serif for titles */
---font-body: 'Lato'           /* Sans-serif for content */
-```
-
-To modify the design system, edit these variables in `Layout.astro` - all components inherit them.
-
-### Pages Architecture
-
-#### Home Page (`src/pages/index.astro` - ~1247 lines)
-Single-page application with multiple interactive sections:
-
-**Structure:**
-1. Fixed navigation bar (hides on scroll down, reappears on scroll up)
-2. Hero section with animated hermine icon
-3. Four parallax divider sections (bottles, ambiance, galettes, terrasse)
-4. Content sections: About, Events, Food, B2B/Webshop, Contact
-5. Footer with social links
-
-**Interactive Features:**
-All functionality implemented in vanilla JavaScript (inline at bottom of file):
-- Mobile hamburger menu with slide-in animation
-- Intersection Observer for scroll-triggered fade-in animations
-- Parallax background effects on scroll (CSS `background-attachment: fixed` on desktop, `scroll` on mobile)
-- Smooth scrolling to anchor links
-- Active navigation state based on scroll position
-- Newsletter form submission
-
-**Parallax images:** Search for `.parallax-bottles`, `.parallax-ambiance`, `.parallax-galettes`, `.parallax-terrasse` and update the `background-image` URLs.
-
-#### Shop Page (`src/pages/shop.astro` - ~987 lines)
-E-commerce interface with client-side filtering and sorting:
-
-**Features:**
-- Product grid with 6 example products (hardcoded in `products` array at top of file)
-- Real-time filters: category, origin
-- Sorting: name, price ascending/descending
-- Add-to-cart buttons with visual feedback
-- Empty state when no products match filters
-
-**Product Data Structure:**
-```typescript
-{
-  id: number
-  name: string
-  producer: string
-  price: number
-  category: string  // Must match filter options
-  origin: string    // Must match filter options
-  image: string     // Path to /public/images/
-  description: string
-}
-```
-
-To add products: Edit the `products` array at the top of shop.astro. The filters and sorting work dynamically with any products added.
-
-### API Routes
-
-**Location:** `src/pages/api/`
-
-**Critical pattern:** All API routes must:
-1. Check for `locals.runtime` availability before accessing the database
-2. Export lowercase HTTP method functions (`get`, `post`, not `GET`, `POST`)
-3. Use prepared statements with parameter binding for security
-4. Return `Response` objects with proper JSON content-type headers
-
-**Example pattern:**
+**Always use this pattern in API routes and server-side code:**
 ```typescript
 import type { APIContext } from 'astro';
 
-export async function get({ request, locals }: APIContext) {
+export async function get({ locals }: APIContext) {
   const runtime = locals.runtime;
   if (!runtime) {
-    return new Response(
-      JSON.stringify({ error: 'Runtime not available' }),
-      { status: 500, headers: { 'content-type': 'application/json' } }
-    );
+    return new Response(JSON.stringify({ error: 'Runtime not available' }), {
+      status: 500,
+      headers: { 'content-type': 'application/json' }
+    });
   }
-  const db = runtime.env.DB;
 
-  const { results } = await db.prepare(
-    "SELECT * FROM products WHERE category = ?"
-  ).bind(category).all();
+  const db = runtime.env.DB;           // D1 Database
+  const kv = runtime.env.CACHE;        // KV namespace for cache
+  const sessions = runtime.env.SESSIONS; // KV namespace for sessions
+  const r2 = runtime.env.IMAGES;       // R2 bucket for images
+
+  // Use prepared statements with parameter binding for security
+  const { results } = await db.prepare('SELECT * FROM products WHERE id = ?')
+    .bind(productId)
+    .all();
 
   return new Response(JSON.stringify(results), {
-    headers: { 'content-type': 'application/json' },
+    headers: { 'content-type': 'application/json' }
   });
 }
 ```
 
-**Available endpoints:**
-- `GET /api/products` - Fetch products with query filters (country, cidery, price range, search)
-- `GET /api/cideries` - List unique cidery names for filter dropdowns
-- `GET /api/countries` - List unique countries
-- `POST /api/orders/index` - Create new order with line items (calculates total server-side)
-- `GET /api/orders/[id]` - Fetch order details
-- `GET /api/products/[id]` - Get single product
+**Key points:**
+- API route exports must use lowercase function names (`get`, `post`, not `GET`, `POST`)
+- Always check `locals.runtime` existence before accessing bindings
+- Use prepared statements with `.bind()` for SQL injection protection
+- Return `Response` objects with proper content-type headers
 
-### Components
+### Utilities: Cache and Rate Limiting
 
-#### OptimizedImage (`src/components/OptimizedImage.astro`)
-Performance-optimized image component with:
-- WebP format with JPEG/PNG fallback via `<picture>` element
-- Responsive srcset support
-- Lazy loading with native `loading="lazy"`
-- Shimmer animation during load
-- Fade-in effect on complete
+**Cache utility (`src/utils/cache.ts`)** - Wrapper for KV-based caching:
+```typescript
+import { Cache, cacheKeys } from '../utils/cache';
 
-**Usage:**
-```astro
-<OptimizedImage
-  src="/images/photo.jpg"
-  alt="Description"
-  width={800}
-  height={600}
-  loading="lazy"
-  objectFit="cover"
-/>
+const cache = new Cache(runtime.env.CACHE);
+
+// Pattern 1: remember() - fetch from cache or execute callback
+const products = await cache.remember(
+  cacheKeys.products.all(),
+  async () => {
+    const { results } = await db.prepare('SELECT * FROM products').all();
+    return results;
+  },
+  300 // TTL in seconds
+);
+
+// Pattern 2: Manual cache operations
+await cache.set('key', value, 3600);
+const value = await cache.get<Product>('key');
+await cache.invalidateByPrefix('products:'); // Invalidate all product caches
 ```
 
-#### BretonPattern (`src/components/BretonPattern.astro`)
-Decorative background patterns with three variants: "hermine", "celtic", "triskell". Configurable opacity and size. Uses CSS patterns and SVG with `pointer-events: none`.
+**Rate limiter (`src/utils/rate-limiter.ts`)** - KV-based rate limiting:
+```typescript
+import { createRateLimiter } from '../utils/rate-limiter';
 
-### Image Optimization Script
+export async function post({ locals, clientAddress }: APIContext) {
+  const limiter = createRateLimiter(locals.runtime.env.CACHE, 'contact');
+  const { allowed, remaining, resetAt, retryAfter } = await limiter.check(clientAddress);
 
-**File:** `scripts/optimize-images.js`
+  if (!allowed) {
+    return new Response(JSON.stringify({ error: 'Too many requests' }), {
+      status: 429,
+      headers: {
+        'Retry-After': String(retryAfter),
+        'Content-Type': 'application/json'
+      }
+    });
+  }
+  // Process request...
+}
+```
 
-Automated image pipeline using Sharp:
-- Converts images to WebP format
-- Generates 4 responsive sizes: 400w, 800w, 1200w, 1600w
-- Outputs to `/public/images/optimized/`
-- Processes all JPG/PNG files in `/public/images/`
+**Predefined rate limit types:** `api`, `contact`, `login`, `newsletter`, `order`
 
-**Usage:**
-1. Place source images in `public/images/`
-2. Run `npm run optimize-images`
-3. Images appear in `public/images/optimized/`
+### Database Schema
 
-### Styling Approach
+See `schema.sql` for the complete schema. Key tables:
 
-**Three-layer system:**
-1. **Global styles** - `Layout.astro` `<style is:global>` block
-2. **Component styles** - Scoped `<style>` blocks in each .astro file
-3. **Tailwind CSS** - Applied via Vite plugin, purged in production
+**products:** Core product catalog (name, cidery, country, category, price, description, image_url, stock, active)
+**orders:** Customer orders (customer info, delivery details, total_amount, status, payment_status)
+**order_items:** Line items for orders (order_id, product_id, quantity, unit_price)
+**contact_messages:** Form submissions (name, email, message, ip_address, status)
+**newsletter_subscribers:** Email signups (email, name, active, subscribed_at)
 
-**Responsive strategy:**
-- Mobile-first design
-- Primary breakpoint at 768px (tablet/desktop)
-- Flexbox and CSS Grid for layouts
-- `clamp()` for fluid typography
+### Design System and Styling
 
-**Key animation classes:**
-- `.fade-in` - Scroll-triggered fade-in (Intersection Observer)
-- `.float` - Vertical bounce animation
-- Hover effects use `transform` and `box-shadow` transitions
+**Three-layer styling system:**
+1. Global CSS variables in `src/layouts/Layout.astro` (colors, spacing, fonts - single source of truth)
+2. Component-scoped styles in individual `.astro` files
+3. Tailwind CSS via Vite plugin (purged in production)
 
-### Database Schema (Inferred)
+**Key CSS variables to modify the theme:**
+```css
+--color-primary: #1a3a5c      /* Navy blue */
+--color-secondary: #d4af37     /* Gold */
+--color-accent: #8b0000        /* Deep red */
+--spacing-xs to --spacing-xl   /* 0.5rem to 6rem scale */
+--font-heading: 'Cinzel'       /* Serif for titles */
+--font-body: 'Lato'            /* Sans-serif for body text */
+```
 
-Based on API routes, the D1 database has these tables:
+**Responsive:** Mobile-first, primary breakpoint at 768px. Use flexbox/grid for layouts, `clamp()` for fluid typography.
 
-**products:**
-- `id` (primary key)
-- `name`
-- `cidery` (producer name)
-- `country`
-- `price` (number)
-- `description`
-- `category` (optional, based on shop filters)
+### Key Components
 
-**orders:**
-- `id` (auto-increment primary key)
-- `customer_name`
-- `customer_email`
-- `customer_phone`
-- `delivery_address`
-- `delivery_method`
-- `total_amount`
-- `notes`
-- `created_at` (likely)
+**OptimizedImage** (`src/components/OptimizedImage.astro`) - Performance-optimized images with WebP fallback, srcset, lazy loading, shimmer effect
+**BretonPattern** (`src/components/BretonPattern.astro`) - Decorative background patterns: "hermine", "celtic", "triskell"
 
-**order_items:**
-- `id` (primary key)
-- `order_id` (foreign key)
-- `product_id` (foreign key)
-- `quantity`
-- `unit_price`
+## Page Architecture
 
-## Development Workflow
+**Home page** (`src/pages/index.astro`) - Single-page application with:
+- Vanilla JS for all interactions (hamburger menu, Intersection Observer animations, parallax, smooth scroll, active nav states)
+- Four parallax divider sections between content blocks (bottles, ambiance, galettes, terrasse)
+- To update parallax images: Search for `.parallax-bottles`, `.parallax-ambiance`, etc. and update `background-image` URLs
 
-### Testing checklist
-- Mobile menu: Resize browser to < 768px, test hamburger menu
-- Parallax sections: Scroll through home page to verify animations
-- Shop filters: Visit /shop and test category/origin filters and sorting
-- Responsive design: Test at 320px (mobile), 768px (tablet), 1200px+ (desktop)
+**Shop page** (`src/pages/shop.astro`) - E-commerce interface with:
+- Client-side filtering (category, origin) and sorting (name, price)
+- Hardcoded product array at top of file - edit this to add/modify products
+- Product structure: `{ id, name, producer, price, category, origin, image, description }`
 
-### File locations
-- Design system reference: `joran_styling_guide.md`
-- Quick integration guide: `quick_start.md`
-- Hermine SVG icon: `public/hermine.svg`
-- Product images: `public/images/` (create subdirectories as needed)
+## Deployment
 
-### Deployment
+**Platform:** Cloudflare Pages/Workers (configured in `wrangler.toml`)
 
-Target platform: Cloudflare Pages/Workers
+**GitHub Actions CI/CD** (`.github/workflows/deploy.yml`):
+- Runs type check (`npx astro check`) and build on all PRs
+- Deploys to Cloudflare Pages on push to main
+- Uses secrets: `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`
 
-The `@astrojs/cloudflare` adapter (configured in astro.config.mjs) handles:
-- Worker script generation from SSR pages
-- Static asset bundling
-- Routing configuration for file-based pages and API endpoints
+**Cloudflare bindings** (in `wrangler.toml`):
+- D1 Database: `DB` binding → `joran-production` database
+- KV Namespaces: `SESSIONS`, `CACHE`
+- R2 Bucket: `IMAGES` → `joran-images` bucket
 
-Build output goes to `dist/` (git-ignored).
+**Environment variables:**
+- Public: `PUBLIC_TURNSTILE_SITE_KEY`, `PUBLIC_SITE_URL` (use `import.meta.env.PUBLIC_*` in .astro files)
+- Secrets: Set via `wrangler secret put` (TURNSTILE_SECRET_KEY, ADMIN_JWT_SECRET, EMAIL_API_KEY)
+
+## Additional Resources
+
+**Documentation files:**
+- `CLOUDFLARE_WORKFLOW.md` - Comprehensive guide for Cloudflare deployment, security headers, rate limiting, Turnstile CAPTCHA, Zero Trust admin, R2 image serving
+- `schema.sql` - Complete D1 database schema with indexes and sample data
+- `.env.example` - Template for required environment variables
